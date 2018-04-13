@@ -1,7 +1,7 @@
-module HaskellProgramming.Chapter12AdversitySpec where
+module Chapter12AdversitySpec where
 
 import Test.Hspec
-import HaskellProgramming.Chapter12Adversity
+import Chapter12Adversity
 
 spec :: Spec
 spec = do

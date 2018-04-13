@@ -1,4 +1,4 @@
-module HaskellProgramming.Chapter14Morse where
+module Chapter14Morse where
 
 import qualified Data.Map as M
 

@@ -1,8 +1,8 @@
-module HaskellProgramming.Chapter15SemigroupsSpec where
+module Chapter15SemigroupsSpec where
 
 import Test.Hspec
 import Test.QuickCheck
-import HaskellProgramming.Chapter15Semigroups
+import Chapter15Semigroups
 import Data.Semigroup
 
 spec :: Spec

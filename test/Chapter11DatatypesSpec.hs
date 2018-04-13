@@ -1,7 +1,7 @@
-module HaskellProgramming.Chapter11DatatypesSpec where
+module Chapter11DatatypesSpec where
 
 import Test.Hspec
-import HaskellProgramming.Chapter11Datatypes
+import Chapter11Datatypes
 
 spec :: Spec
 spec = do

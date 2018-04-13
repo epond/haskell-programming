@@ -1,4 +1,4 @@
-module HaskellProgramming.Chapter15Monoids where
+module Chapter15Monoids where
 
 import Data.Monoid
 

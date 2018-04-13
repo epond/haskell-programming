@@ -1,4 +1,4 @@
-module HaskellProgramming.Chapter06Typeclasses where
+module Chapter06Typeclasses where
 
 data TisAnInteger = TisAn Integer
 instance Eq TisAnInteger where

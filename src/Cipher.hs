@@ -1,4 +1,4 @@
-module HaskellProgramming.Cipher where
+module Cipher where
 
 import Data.Char
 

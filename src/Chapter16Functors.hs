@@ -1,4 +1,4 @@
-module HaskellProgramming.Chapter16Functors where
+module Chapter16Functors where
 
 -- Commonly used functors
 -- Wait, how does that even typecheck? Work through the types to see how the

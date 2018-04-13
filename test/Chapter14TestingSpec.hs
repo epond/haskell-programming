@@ -1,8 +1,8 @@
-module HaskellProgramming.Chapter14TestingSpec where
+module Chapter14TestingSpec where
 
 import Test.Hspec
 import Test.QuickCheck
-import HaskellProgramming.Chapter14Testing
+import Chapter14Testing
 import Data.List (sort)
 
 spec :: Spec

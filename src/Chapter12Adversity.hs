@@ -1,4 +1,4 @@
-module HaskellProgramming.Chapter12Adversity where
+module Chapter12Adversity where
 
 import Data.List (intercalate)
 

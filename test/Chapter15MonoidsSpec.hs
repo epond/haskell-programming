@@ -1,8 +1,8 @@
-module HaskellProgramming.Chapter15MonoidsSpec where
+module Chapter15MonoidsSpec where
 
 import Test.Hspec
 import Test.QuickCheck
-import HaskellProgramming.Chapter15Monoids
+import Chapter15Monoids
 import Data.Monoid
 import Control.Monad
 

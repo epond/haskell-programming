@@ -1,4 +1,4 @@
-module HaskellProgramming.Chapter11Datatypes where
+module Chapter11Datatypes where
 
 import Data.Char (toUpper, isUpper, toLower)
 import Data.List (intercalate, elemIndex, sortOn)

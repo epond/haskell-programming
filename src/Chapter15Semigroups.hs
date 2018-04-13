@@ -1,4 +1,4 @@
-module HaskellProgramming.Chapter15Semigroups where
+module Chapter15Semigroups where
 
 import Data.Semigroup
 

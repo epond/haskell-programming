@@ -1,7 +1,7 @@
-module HaskellProgramming.Chapter10FoldingListsSpec where
+module Chapter10FoldingListsSpec where
 
 import Test.Hspec
-import HaskellProgramming.Chapter10FoldingLists
+import Chapter10FoldingLists
 import Data.Time
 
 spec :: Spec

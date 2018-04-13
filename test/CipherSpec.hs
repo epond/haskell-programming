@@ -1,7 +1,7 @@
-module HaskellProgramming.CipherSpec where
+module CipherSpec where
 
 import Test.Hspec
-import HaskellProgramming.Cipher
+import Cipher
 
 spec :: Spec
 spec = do

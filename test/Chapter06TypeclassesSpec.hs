@@ -1,7 +1,7 @@
-module HaskellProgramming.Chapter06TypeclassesSpec where
+module Chapter06TypeclassesSpec where
 
 import Test.Hspec
-import HaskellProgramming.Chapter06Typeclasses
+import Chapter06Typeclasses
 
 spec :: Spec
 spec = do

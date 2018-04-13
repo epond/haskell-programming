@@ -1,8 +1,8 @@
-module HaskellProgramming.Chapter14MorseSpec where
+module Chapter14MorseSpec where
 
 import Test.Hspec
 import Test.QuickCheck
-import HaskellProgramming.Chapter14Morse
+import Chapter14Morse
 import qualified Data.Map as M
 
 spec :: Spec
