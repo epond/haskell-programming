@@ -49,7 +49,8 @@ test-suite spec
                    Chapter14MorseSpec,
                    Chapter14TestingSpec,
                    Chapter15MonoidsSpec,
-                   Chapter15SemigroupsSpec
+                   Chapter15SemigroupsSpec,
+                   Chapter16FunctorsSpec
   build-depends:   base,
                    haskell-programming,
                    hspec,
