@@ -1,0 +1,10 @@
+flags: {}
+packages:
+- '.'
+extra-deps: [recursion-schemes-4.1.2, tagged-0.8.5]
+# See all available stackage snapshots at https://www.stackage.org/snapshots
+# lts-2.22 uses GHC 7.8.4
+#resolver: lts-2.22
+# lts-3.4 uses GHC 7.10.2
+resolver: lts-3.4
+allow-newer: true

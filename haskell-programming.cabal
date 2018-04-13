@@ -1,0 +1,60 @@
+name:              haskell-programming
+version:           1.0
+Build-Type:        Simple
+cabal-version:     >= 1.10
+
+executable haskell-programming
+  main-is:         HaskellProgramming.hs
+  hs-source-dirs:  src
+  default-language:Haskell2010
+  other-modules:   Timer
+  build-depends:   base,
+                   haskell-programming
+
+library
+  ghc-options:     -Wall
+  exposed-modules: HaskellProgramming.Chapter06Typeclasses,
+                   HaskellProgramming.Chapter09Lists,
+                   HaskellProgramming.Chapter10FoldingLists,
+                   HaskellProgramming.Cipher,
+                   HaskellProgramming.Chapter11Datatypes,
+                   HaskellProgramming.Chapter12Adversity,
+                   HaskellProgramming.Chapter14Morse,
+                   HaskellProgramming.Chapter14Testing,
+                   HaskellProgramming.Chapter15Monoids,
+                   HaskellProgramming.Chapter15Semigroups,
+                   HaskellProgramming.Chapter16Functors
+  hs-source-dirs:  src
+  default-language:Haskell2010
+  build-depends:   base,
+                   mtl,
+                   QuickCheck,
+                   recursion-schemes,
+                   data-ordlist,
+                   time,
+                   containers,
+                   semigroups
+
+test-suite spec
+  main-is:         Spec.hs
+  type:            exitcode-stdio-1.0
+  hs-source-dirs:  test
+  default-language:Haskell2010
+  other-modules:   HaskellProgramming.Chapter06TypeclassesSpec,
+                   HaskellProgramming.Chapter09ListsSpec,
+                   HaskellProgramming.Chapter10FoldingListsSpec,
+                   HaskellProgramming.CipherSpec,
+                   HaskellProgramming.Chapter11DatatypesSpec,
+                   HaskellProgramming.Chapter12AdversitySpec,
+                   HaskellProgramming.Chapter14MorseSpec,
+                   HaskellProgramming.Chapter14TestingSpec,
+                   HaskellProgramming.Chapter15MonoidsSpec,
+                   HaskellProgramming.Chapter15SemigroupsSpec
+  build-depends:   base,
+                   haskell-programming,
+                   hspec,
+                   mtl,
+                   QuickCheck,
+                   time,
+                   containers,
+                   semigroups
