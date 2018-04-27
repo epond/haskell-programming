@@ -103,3 +103,8 @@ data Four a b c d = Four a b c d deriving (Eq, Show)
 
 instance Functor (Four a b c) where
     fmap f (Four w x y z) = Four w x y (f z)
+
+data Four' a b c = Four' a b c c deriving (Eq, Show)
+
+instance Functor (Four' a b) where
+    fmap f (Four' w x y z) = Four' w x (f y) (f z)

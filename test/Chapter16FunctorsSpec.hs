@@ -36,6 +36,10 @@ spec = do
             property (functorIdentity :: Four Int Bool Char Int -> Bool)
         it "has a Functor instance for Four that satisfies composition law" $ do
             property (\x -> (functorCompose (+1) (*2)) (x :: Four Int Bool Char Int))
+        it "has a Functor instance for Four' that satisfies identity law" $ do
+            property (functorIdentity :: Four' Int Bool Char -> Bool)
+        it "has a Functor instance for Four' that satisfies composition law" $ do
+            property (\x -> (functorCompose (+1) (*2)) (x :: Four' Bool Char Int))
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -75,3 +79,11 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four
         y <- arbitrary
         z <- arbitrary
         return (Four w x y z)
+
+instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Four' a b c) where
+    arbitrary = do
+        w <- arbitrary
+        x <- arbitrary
+        y <- arbitrary
+        z <- arbitrary
+        return (Four' w x y z)
