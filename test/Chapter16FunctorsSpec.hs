@@ -28,6 +28,10 @@ spec = do
             property (functorIdentity :: Three Int Bool Char -> Bool)
         it "has a Functor instance for Three that satisfies composition law" $ do
             property (\x -> (functorCompose (+1) (*2)) (x :: Three Bool Char Int))
+        it "has a Functor instance for Three' that satisfies identity law" $ do
+            property (functorIdentity :: Three' Bool Int -> Bool)
+        it "has a Functor instance for Three' that satisfies composition law" $ do
+            property (\x -> (functorCompose (+1) (*2)) (x :: Three' Bool Int))
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -52,3 +56,10 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) wher
         y <- arbitrary
         z <- arbitrary
         return (Three x y z)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Three' a b) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        z <- arbitrary
+        return (Three' x y z)
