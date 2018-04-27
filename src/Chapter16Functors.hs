@@ -88,3 +88,8 @@ data Two a b = Two a b deriving (Eq, Show)
 
 instance Functor (Two a) where
     fmap f (Two x y) = Two x (f y)
+
+data Three a b c = Three a b c deriving (Eq, Show)
+
+instance Functor (Three a b) where
+    fmap f (Three x y z) = Three x y (f z)
