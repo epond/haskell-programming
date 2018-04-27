@@ -70,3 +70,11 @@ functorCompose f g x = (fmap g (fmap f x)) == (fmap (g . f) x)
 -- ghci> let c = functorCompose (+1) (*2)
 -- ghci> let li x = c (x :: [Int])
 -- ghci> quickCheck li
+
+
+-- 16.10 Exercises: Instances of Func
+
+newtype Identity a = Identity a deriving (Eq, Show)
+
+instance Functor Identity where
+    fmap f (Identity a) = Identity (f a)
