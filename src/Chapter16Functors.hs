@@ -108,3 +108,6 @@ data Four' a b c = Four' a b c c deriving (Eq, Show)
 
 instance Functor (Four' a b) where
     fmap f (Four' w x y z) = Four' w x (f y) (f z)
+
+-- Cannot implement Functor for Trivial because its kind is * and Functor needs * -> *
+data Trivial = Trivial

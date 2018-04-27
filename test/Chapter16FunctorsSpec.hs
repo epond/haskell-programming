@@ -2,6 +2,7 @@ module Chapter16FunctorsSpec where
 
 import Test.Hspec
 import Test.QuickCheck
+import Test.QuickCheck.Function
 import Chapter16Functors
 
 spec :: Spec
@@ -15,7 +16,7 @@ spec = do
         it "has a Functor instance for Identity that satisfies identity law" $ do
             property (functorIdentity :: Identity Int -> Bool)
         it "has a Functor instance for Identity that satisfies composition law" $ do
-            property (\x -> (functorCompose (+1) (*2)) (x :: Identity Int))
+            property composeIdentity
         it "has a Functor instance for Pair that satisfies identity law" $ do
             property (functorIdentity :: Pair Int -> Bool)
         it "has a Functor instance for Pair that satisfies composition law" $ do
@@ -45,6 +46,9 @@ instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
         x <- arbitrary
         return (Identity x)
+
+composeIdentity :: Identity Int -> Fun Int Int -> Fun Int Int -> Bool
+composeIdentity x (Fun _ f) (Fun _ g) = functorCompose f g x
 
 instance Arbitrary a => Arbitrary (Pair a) where
     arbitrary = do
