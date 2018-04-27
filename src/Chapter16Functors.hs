@@ -83,3 +83,8 @@ data Pair a = Pair a a deriving (Eq, Show)
 
 instance Functor Pair where
     fmap f (Pair x y) = Pair (f x) (f y)
+
+data Two a b = Two a b deriving (Eq, Show)
+
+instance Functor (Two a) where
+    fmap f (Two x y) = Two x (f y)

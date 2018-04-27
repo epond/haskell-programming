@@ -20,6 +20,10 @@ spec = do
             property (functorIdentity :: Pair Int -> Bool)
         it "has a Functor instance for Pair that satisfies composition law" $ do
             property (\x -> (functorCompose (+1) (*2)) (x :: Pair Int))
+        it "has a Functor instance for Two that satisfies identity law" $ do
+            property (functorIdentity :: Two Int Bool -> Bool)
+        it "has a Functor instance for Two that satisfies composition law" $ do
+            property (\x -> (functorCompose (+1) (*2)) (x :: Two Bool Int))
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -30,3 +34,9 @@ instance Arbitrary a => Arbitrary (Pair a) where
     arbitrary = do
         x <- arbitrary
         return (Pair x x)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        return (Two x y)
