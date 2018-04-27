@@ -37,7 +37,8 @@ instance Arbitrary a => Arbitrary (Identity a) where
 instance Arbitrary a => Arbitrary (Pair a) where
     arbitrary = do
         x <- arbitrary
-        return (Pair x x)
+        y <- arbitrary
+        return (Pair x y)
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
     arbitrary = do
