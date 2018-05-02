@@ -20,27 +20,27 @@ spec = do
         it "has a Functor instance for Pair that satisfies identity law" $ do
             property (functorIdentity :: Pair Int -> Bool)
         it "has a Functor instance for Pair that satisfies composition law" $ do
-            property (\x -> (functorCompose (+1) (*2)) (x :: Pair Int))
+            property composePair
         it "has a Functor instance for Two that satisfies identity law" $ do
             property (functorIdentity :: Two Int Bool -> Bool)
         it "has a Functor instance for Two that satisfies composition law" $ do
-            property (\x -> (functorCompose (+1) (*2)) (x :: Two Bool Int))
+            property composeTwo
         it "has a Functor instance for Three that satisfies identity law" $ do
             property (functorIdentity :: Three Int Bool Char -> Bool)
         it "has a Functor instance for Three that satisfies composition law" $ do
-            property (\x -> (functorCompose (+1) (*2)) (x :: Three Bool Char Int))
+            property composeThree
         it "has a Functor instance for Three' that satisfies identity law" $ do
             property (functorIdentity :: Three' Bool Int -> Bool)
         it "has a Functor instance for Three' that satisfies composition law" $ do
-            property (\x -> (functorCompose (+1) (*2)) (x :: Three' Bool Int))
+            property composeThree'
         it "has a Functor instance for Four that satisfies identity law" $ do
             property (functorIdentity :: Four Int Bool Char Int -> Bool)
         it "has a Functor instance for Four that satisfies composition law" $ do
-            property (\x -> (functorCompose (+1) (*2)) (x :: Four Int Bool Char Int))
+            property composeFour
         it "has a Functor instance for Four' that satisfies identity law" $ do
             property (functorIdentity :: Four' Int Bool Char -> Bool)
         it "has a Functor instance for Four' that satisfies composition law" $ do
-            property (\x -> (functorCompose (+1) (*2)) (x :: Four' Bool Char Int))
+            property composeFour'
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -56,11 +56,17 @@ instance Arbitrary a => Arbitrary (Pair a) where
         y <- arbitrary
         return (Pair x y)
 
+composePair :: Pair Int -> Fun Int Int -> Fun Int Int -> Bool
+composePair x (Fun _ f) (Fun _ g) = functorCompose f g x
+
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
     arbitrary = do
         x <- arbitrary
         y <- arbitrary
         return (Two x y)
+
+composeTwo :: Two Bool Int -> Fun Int Int -> Fun Int Int -> Bool
+composeTwo x (Fun _ f) (Fun _ g) = functorCompose f g x
 
 instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) where
     arbitrary = do
@@ -69,12 +75,18 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) wher
         z <- arbitrary
         return (Three x y z)
 
+composeThree :: Three Bool Char Int -> Fun Int Int -> Fun Int Int -> Bool
+composeThree x (Fun _ f) (Fun _ g) = functorCompose f g x
+
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Three' a b) where
     arbitrary = do
         x <- arbitrary
         y <- arbitrary
         z <- arbitrary
         return (Three' x y z)
+
+composeThree' :: Three' Bool Int -> Fun Int Int -> Fun Int Int -> Bool
+composeThree' x (Fun _ f) (Fun _ g) = functorCompose f g x
 
 instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four a b c d) where
     arbitrary = do
@@ -84,6 +96,9 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four
         z <- arbitrary
         return (Four w x y z)
 
+composeFour :: Four Bool Int Char Int -> Fun Int Int -> Fun Int Int -> Bool
+composeFour x (Fun _ f) (Fun _ g) = functorCompose f g x
+
 instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Four' a b c) where
     arbitrary = do
         w <- arbitrary
@@ -91,3 +106,6 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Four' a b c) wher
         y <- arbitrary
         z <- arbitrary
         return (Four' w x y z)
+
+composeFour' :: Four' Bool Char Int -> Fun Int Int -> Fun Int Int -> Bool
+composeFour' x (Fun _ f) (Fun _ g) = functorCompose f g x
