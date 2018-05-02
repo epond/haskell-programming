@@ -46,6 +46,11 @@ spec = do
             property (functorIdentity :: Possibly Int -> Bool)
         it "has a Functor instance that satisfies composition law" $ do
             property composePossibly
+    describe("Short Exercise: Sum") $ do
+        it "has a Functor instance that satisfies identity law" $ do
+            property (functorIdentity :: Sum Bool Int -> Bool)
+        it "has a Functor instance that satisfies composition law" $ do
+            property composeSum
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -124,3 +129,13 @@ instance Arbitrary a => Arbitrary (Possibly a) where
 
 composePossibly :: Possibly Int -> Fun Int Int -> Fun Int Int -> Bool
 composePossibly x (Fun _ f) (Fun _ g) = functorCompose f g x
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Sum a b) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        frequency [ (1, return $ First x)
+                  , (1, return $ Second y) ]
+
+composeSum :: Sum Bool Int -> Fun Int Int -> Fun Int Int -> Bool
+composeSum x (Fun _ f) (Fun _ g) = functorCompose f g x

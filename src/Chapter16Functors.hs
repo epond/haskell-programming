@@ -120,3 +120,11 @@ data Possibly a = LolNope | Yeppers a deriving (Eq, Show)
 instance Functor Possibly where
     fmap f LolNope = LolNope
     fmap f (Yeppers x) = Yeppers (f x)
+
+-- Short Exercise
+
+data Sum a b = First a | Second b deriving (Eq, Show)
+
+instance Functor (Sum a) where
+    fmap f (First x) = First x
+    fmap f (Second x) = Second $ f x
