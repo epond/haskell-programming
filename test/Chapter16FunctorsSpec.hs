@@ -41,6 +41,11 @@ spec = do
             property (functorIdentity :: Four' Int Bool Char -> Bool)
         it "has a Functor instance for Four' that satisfies composition law" $ do
             property composeFour'
+    describe("16.11 Ignoring Possibilities. Exercise: Possibly") $ do
+        it "has a Functor instance that satisfies identity law" $ do
+            property (functorIdentity :: Possibly Int -> Bool)
+        it "has a Functor instance that satisfies composition law" $ do
+            property composePossibly
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -109,3 +114,13 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Four' a b c) wher
 
 composeFour' :: Four' Bool Char Int -> Fun Int Int -> Fun Int Int -> Bool
 composeFour' x (Fun _ f) (Fun _ g) = functorCompose f g x
+
+
+instance Arbitrary a => Arbitrary (Possibly a) where
+    arbitrary = do
+        x <- arbitrary
+        frequency [ (1, return LolNope)
+                  , (1, return $ Yeppers x) ]
+
+composePossibly :: Possibly Int -> Fun Int Int -> Fun Int Int -> Bool
+composePossibly x (Fun _ f) (Fun _ g) = functorCompose f g x

@@ -111,3 +111,12 @@ instance Functor (Four' a b) where
 
 -- Cannot implement Functor for Trivial because its kind is * and Functor needs * -> *
 data Trivial = Trivial
+
+
+-- 16.11 Ignoring Possibilities. Exercise: Possibly
+
+data Possibly a = LolNope | Yeppers a deriving (Eq, Show)
+
+instance Functor Possibly where
+    fmap f LolNope = LolNope
+    fmap f (Yeppers x) = Yeppers (f x)
