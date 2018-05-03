@@ -128,3 +128,28 @@ data Sum a b = First a | Second b deriving (Eq, Show)
 instance Functor (Sum a) where
     fmap f (First x) = First x
     fmap f (Second x) = Second $ f x
+
+
+-- 16.17 Chapter exercises
+
+-- Can a valid Functor be written for each type?
+
+-- 1.
+-- data Bool = False | True
+-- No because type has kind * but we need it to have kind * -> *
+
+-- 2.
+-- data BoolAndSomethingElse a = False' a | True' a
+-- Yes because it has kind * -> *
+
+-- 3.
+-- data BoolAndMaybeSomethingElse a = Falsish | Truish a
+-- Yes, this is Maybe
+
+-- 4.
+-- newtype Mu f = InF { outF :: f (Mu f) }
+-- No because type has kind (* -> *) -> *
+
+-- 5.
+-- data D = D (Array Word Word) Int Int
+-- Yes because it has kind * -> *
