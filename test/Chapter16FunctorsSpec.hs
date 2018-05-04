@@ -51,6 +51,11 @@ spec = do
             property (functorIdentity :: Sum Bool Int -> Bool)
         it "has a Functor instance that satisfies composition law" $ do
             property composeSum
+    describe("16.17 Write Functor instances for these datatypes") $ do
+        it "Quant has a Functor instance that satisfies identity law" $ do
+            property (functorIdentity :: Quant Bool Int -> Bool)
+        it "Quant has a Functor instance that satisfies composition law" $ do
+            property composeQuant
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -139,3 +144,14 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Sum a b) where
 
 composeSum :: Sum Bool Int -> Fun Int Int -> Fun Int Int -> Bool
 composeSum x (Fun _ f) (Fun _ g) = functorCompose f g x
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Quant a b) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        frequency [ (1, return Finance)
+                  , (1, return $ Desk x)
+                  , (1, return $ Bloor y) ]
+
+composeQuant :: Quant Bool Int -> Fun Int Int -> Fun Int Int -> Bool
+composeQuant x (Fun _ f) (Fun _ g) = functorCompose f g x

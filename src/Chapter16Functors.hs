@@ -180,3 +180,20 @@ data More b a = L a b a | R b a b deriving (Eq, Show)
 instance Functor (More x) where
     fmap f (L a b a') = L (f a) b (f a')
     fmap f (R b a b') = R b (f a) b'
+
+
+-- Write Functor instances for the following datatypes,
+-- keeping in mind that it should result in a Functor that does the following:
+-- Prelude> fmap (+1) (L 1 2 3)
+-- L 2 2 4
+-- Prelude> fmap (+1) (R 1 2 3)
+-- R 1 3 3
+
+-- 1.
+
+data Quant a b = Finance | Desk a | Bloor b deriving (Eq, Show)
+
+instance Functor (Quant a) where
+    fmap _ Finance = Finance
+    fmap _ (Desk x) = Desk x
+    fmap f (Bloor x) = Bloor (f x)
