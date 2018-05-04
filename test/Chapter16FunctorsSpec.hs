@@ -56,6 +56,10 @@ spec = do
             property (functorIdentity :: Quant Bool Int -> Bool)
         it "Quant has a Functor instance that satisfies composition law" $ do
             property composeQuant
+        it "K has a Functor instance that satisfies identity law" $ do
+            property (functorIdentity :: K Bool Int -> Bool)
+        it "K has a Functor instance that satisfies composition law" $ do
+            property composeK
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -155,3 +159,11 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Quant a b) where
 
 composeQuant :: Quant Bool Int -> Fun Int Int -> Fun Int Int -> Bool
 composeQuant x (Fun _ f) (Fun _ g) = functorCompose f g x
+
+instance Arbitrary a => Arbitrary (K a b) where
+    arbitrary = do
+        x <- arbitrary
+        return (K x)
+
+composeK :: K Bool Int -> Fun Int Int -> Fun Int Int -> Bool
+composeK x (Fun _ f) (Fun _ g) = functorCompose f g x

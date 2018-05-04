@@ -192,3 +192,10 @@ instance Functor (Quant a) where
     fmap _ Finance = Finance
     fmap _ (Desk x) = Desk x
     fmap f (Bloor x) = Bloor (f x)
+
+-- 2.
+
+data K a b = K a deriving (Eq, Show)
+
+instance Functor (K a) where
+    fmap _ (K x) = K x
