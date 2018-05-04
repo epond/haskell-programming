@@ -153,3 +153,30 @@ instance Functor (Sum a) where
 -- 5.
 -- data D = D (Array Word Word) Int Int
 -- Yes because it has kind * -> *
+
+
+-- Rearrange the arguments to the type constructor of the datatype so the Functor instance works.
+
+-- 1. data Summ a b = Fst a | Snd b
+
+data Summ b a = Fst a | Snd b
+
+instance Functor (Summ e) where
+    fmap f (Fst a) = Fst (f a)
+    fmap f (Snd b) = Snd b
+
+-- 2. data Company a b c = DeepBlue a c | Something b
+
+data Company a c b = DeepBlue a c | Something b
+
+instance Functor (Company e e') where
+    fmap f (Something b) = Something (f b)
+    fmap _ (DeepBlue a c) = DeepBlue a c
+
+-- 3. data More a b = L a b a | R b a b deriving (Eq, Show)
+
+data More b a = L a b a | R b a b deriving (Eq, Show)
+
+instance Functor (More x) where
+    fmap f (L a b a') = L (f a) b (f a')
+    fmap f (R b a b') = R b (f a) b'
