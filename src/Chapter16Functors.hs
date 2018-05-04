@@ -183,11 +183,6 @@ instance Functor (More x) where
 
 
 -- Write Functor instances for the following datatypes,
--- keeping in mind that it should result in a Functor that does the following:
--- Prelude> fmap (+1) (L 1 2 3)
--- L 2 2 4
--- Prelude> fmap (+1) (R 1 2 3)
--- R 1 3 3
 
 -- 1.
 
