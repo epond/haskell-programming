@@ -210,3 +210,10 @@ newtype K' a b = K' a deriving (Eq, Show)
 
 instance Functor (Flip K' a) where
     fmap f (Flip (K' x)) = Flip (K' (f x))
+
+-- 4.
+
+data EvilGoateeConst a b = GoatyConst b deriving (Eq, Show)
+
+instance Functor (EvilGoateeConst a) where
+    fmap f (GoatyConst x) = GoatyConst (f x)

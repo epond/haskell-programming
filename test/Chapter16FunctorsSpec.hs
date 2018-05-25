@@ -66,6 +66,10 @@ spec = do
             property (functorIdentity :: (Flip K' Bool Int) -> Bool)
         it "Flip K' has a Functor instance that satisfies composition law" $ do
             property composeFlipK
+        it "EvilGoateeConst has a Functor instance that satisfies identity law" $ do
+            property (functorIdentity :: EvilGoateeConst Bool Int -> Bool)
+        it "EvilGoateeConst has a Functor instance that satisfies composition law" $ do
+            property composeEvilGoateeConst
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -181,3 +185,11 @@ instance Arbitrary b => Arbitrary (Flip K' a b) where
 
 composeFlipK :: (Flip K' Bool) Int -> Fun Int Int -> Fun Int Int -> Bool
 composeFlipK x (Fun _ f) (Fun _ g) = functorCompose f g x
+
+instance Arbitrary b => Arbitrary (EvilGoateeConst a b) where
+    arbitrary = do
+        x <- arbitrary
+        return (GoatyConst x)
+
+composeEvilGoateeConst :: EvilGoateeConst Bool Int -> Fun Int Int -> Fun Int Int -> Bool
+composeEvilGoateeConst x (Fun _ f) (Fun _ g) = functorCompose f g x
