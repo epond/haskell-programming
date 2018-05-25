@@ -209,4 +209,4 @@ newtype Flip f a b = Flip (f b a) deriving (Eq, Show)
 newtype K' a b = K' a deriving (Eq, Show)
 
 instance Functor (Flip K' a) where
-    fmap = undefined
+    fmap f (Flip (K' x)) = Flip (K' (f x))
