@@ -217,3 +217,10 @@ data EvilGoateeConst a b = GoatyConst b deriving (Eq, Show)
 
 instance Functor (EvilGoateeConst a) where
     fmap f (GoatyConst x) = GoatyConst (f x)
+
+-- 5.
+
+data LiftItOut f a = LiftItOut (f a) deriving (Eq, Show)
+
+instance Functor f => Functor (LiftItOut f) where
+    fmap g (LiftItOut f) = LiftItOut (fmap g f)

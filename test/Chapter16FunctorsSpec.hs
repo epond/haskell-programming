@@ -70,6 +70,10 @@ spec = do
             property (functorIdentity :: EvilGoateeConst Bool Int -> Bool)
         it "EvilGoateeConst has a Functor instance that satisfies composition law" $ do
             property composeEvilGoateeConst
+        it "LiftItOut has a Functor instance that satisfies identity law" $ do
+            property (functorIdentity :: LiftItOut Maybe Int -> Bool)
+        it "LiftItOut has a Functor instance that satisfies composition law" $ do
+            property composeLiftItOut
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -193,3 +197,12 @@ instance Arbitrary b => Arbitrary (EvilGoateeConst a b) where
 
 composeEvilGoateeConst :: EvilGoateeConst Bool Int -> Fun Int Int -> Fun Int Int -> Bool
 composeEvilGoateeConst x (Fun _ f) (Fun _ g) = functorCompose f g x
+
+instance Arbitrary a => Arbitrary (LiftItOut Maybe a) where
+    arbitrary = do
+        x <- arbitrary
+        frequency [ (1, return $ LiftItOut (Just x))
+                  , (1, return $ LiftItOut Nothing) ]
+
+composeLiftItOut :: LiftItOut Maybe Int -> Fun Int Int -> Fun Int Int -> Bool
+composeLiftItOut x (Fun _ f) (Fun _ g) = functorCompose f g x
