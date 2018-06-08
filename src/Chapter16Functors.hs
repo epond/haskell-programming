@@ -231,3 +231,10 @@ data Parappa f g a = DaWrappa (f a) (g a) deriving (Eq, Show)
 
 instance (Functor f, Functor g) => Functor (Parappa f g) where
     fmap h (DaWrappa f g) = DaWrappa (fmap h f) (fmap h g)
+
+-- 7.
+
+data IgnoreOne f g a b = IgnoringSomething (f a) (g b) deriving (Eq, Show)
+
+instance Functor g => Functor (IgnoreOne f g a) where
+    fmap h (IgnoringSomething f g) = IgnoringSomething f (fmap h g)

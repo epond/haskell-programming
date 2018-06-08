@@ -78,6 +78,10 @@ spec = do
             property (functorIdentity :: Parappa Possibly Maybe Int -> Bool)
         it "Parappa has a Functor instance that satisfies composition law" $ do
             property composeParappa
+        it "IgnoreOne has a Functor instance that satisfies identity law" $ do
+            property (functorIdentity :: IgnoreOne Possibly Maybe Bool Int -> Bool)
+        it "IgnoreOne has a Functor instance that satisfies composition law" $ do
+            property composeIgnoreOne
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -221,3 +225,15 @@ instance Arbitrary a => Arbitrary (Parappa Possibly Maybe a) where
 
 composeParappa :: Parappa Possibly Maybe Int -> Fun Int Int -> Fun Int Int -> Bool
 composeParappa x (Fun _ f) (Fun _ g) = functorCompose f g x
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (IgnoreOne Possibly Maybe a b) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        frequency [ (1, return $ IgnoringSomething LolNope Nothing)
+                  , (1, return $ IgnoringSomething LolNope (Just x))
+                  , (1, return $ IgnoringSomething (Yeppers y) Nothing)
+                  , (1, return $ IgnoringSomething (Yeppers y) (Just x)) ]
+
+composeIgnoreOne :: IgnoreOne Possibly Maybe Bool Int -> Fun Int Int -> Fun Int Int -> Bool
+composeIgnoreOne x (Fun _ f) (Fun _ g) = functorCompose f g x
