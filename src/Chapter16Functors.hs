@@ -238,3 +238,10 @@ data IgnoreOne f g a b = IgnoringSomething (f a) (g b) deriving (Eq, Show)
 
 instance Functor g => Functor (IgnoreOne f g a) where
     fmap h (IgnoringSomething f g) = IgnoringSomething f (fmap h g)
+
+-- 8.
+
+data Notorious g o a t = Notorious (g o) (g a) (g t) deriving (Eq, Show)
+
+instance Functor g => Functor (Notorious g o a) where
+    fmap f (Notorious o a t) = Notorious o a (fmap f t)
