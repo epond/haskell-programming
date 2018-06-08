@@ -90,6 +90,10 @@ spec = do
             property (functorIdentity :: List Char -> Bool)
         it "List has a Functor instance that satisfies composition law" $ do
             property composeList
+        it "GoatLord has a Functor instance that satisfies identity law" $ do
+            property (functorIdentity :: GoatLord Int -> Bool)
+        it "GoatLord has a Functor instance that satisfies composition law" $ do
+            property composeGoatLord
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -273,3 +277,16 @@ instance Arbitrary a => Arbitrary (List a) where
 
 composeList :: List Int -> Fun Int Int -> Fun Int Int -> Bool
 composeList x (Fun _ f) (Fun _ g) = functorCompose f g x
+
+-- This Arbitraty instance is too limited in what it generates - make it better
+instance Arbitrary a => Arbitrary (GoatLord a) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        z <- arbitrary
+        frequency [ (1, return NoGoat)
+                  , (1, return $ OneGoat x)
+                  , (1, return $ MoreGoats (OneGoat x) (OneGoat y) (OneGoat z)) ]
+
+composeGoatLord :: GoatLord Int -> Fun Int Int -> Fun Int Int -> Bool
+composeGoatLord x (Fun _ f) (Fun _ g) = functorCompose f g x
