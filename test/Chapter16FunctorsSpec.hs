@@ -278,7 +278,7 @@ instance Arbitrary a => Arbitrary (List a) where
 composeList :: List Int -> Fun Int Int -> Fun Int Int -> Bool
 composeList x (Fun _ f) (Fun _ g) = functorCompose f g x
 
--- This Arbitraty instance is too limited in what it generates - make it better
+-- This Arbitrary instance is too limited in what it generates - make it better
 instance Arbitrary a => Arbitrary (GoatLord a) where
     arbitrary = do
         x <- arbitrary
