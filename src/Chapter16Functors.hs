@@ -245,3 +245,11 @@ data Notorious g o a t = Notorious (g o) (g a) (g t) deriving (Eq, Show)
 
 instance Functor g => Functor (Notorious g o a) where
     fmap f (Notorious o a t) = Notorious o a (fmap f t)
+
+-- 9.
+
+data List a = Nil | Cons a (List a) deriving (Eq, Show)
+
+instance Functor List where
+    fmap _ Nil = Nil
+    fmap f (Cons x rest) = Cons (f x) $ fmap f rest

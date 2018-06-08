@@ -86,6 +86,10 @@ spec = do
             property (functorIdentity :: Notorious Maybe Bool Int Char -> Bool)
         it "Notorious has a Functor instance that satisfies composition law" $ do
             property composeNotorious
+        it "List has a Functor instance that satisfies identity law" $ do
+            property (functorIdentity :: List Char -> Bool)
+        it "List has a Functor instance that satisfies composition law" $ do
+            property composeList
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -258,3 +262,14 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Notorious Maybe a
 
 composeNotorious :: Notorious Maybe Bool Char Int -> Fun Int Int -> Fun Int Int -> Bool
 composeNotorious x (Fun _ f) (Fun _ g) = functorCompose f g x
+
+instance Arbitrary a => Arbitrary (List a) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        frequency [ (1, return Nil)
+                  , (1, return $ Cons x Nil)
+                  , (1, return $ Cons x $ Cons y Nil) ]
+
+composeList :: List Int -> Fun Int Int -> Fun Int Int -> Bool
+composeList x (Fun _ f) (Fun _ g) = functorCompose f g x
