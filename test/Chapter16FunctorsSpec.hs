@@ -74,6 +74,10 @@ spec = do
             property (functorIdentity :: LiftItOut Maybe Int -> Bool)
         it "LiftItOut has a Functor instance that satisfies composition law" $ do
             property composeLiftItOut
+        it "Parappa has a Functor instance that satisfies identity law" $ do
+            property (functorIdentity :: Parappa Possibly Maybe Int -> Bool)
+        it "Parappa has a Functor instance that satisfies composition law" $ do
+            property composeParappa
 
 instance Arbitrary a => Arbitrary (Identity a) where
     arbitrary = do
@@ -206,3 +210,14 @@ instance Arbitrary a => Arbitrary (LiftItOut Maybe a) where
 
 composeLiftItOut :: LiftItOut Maybe Int -> Fun Int Int -> Fun Int Int -> Bool
 composeLiftItOut x (Fun _ f) (Fun _ g) = functorCompose f g x
+
+instance Arbitrary a => Arbitrary (Parappa Possibly Maybe a) where
+    arbitrary = do
+        x <- arbitrary
+        frequency [ (1, return $ DaWrappa LolNope Nothing)
+                  , (1, return $ DaWrappa LolNope (Just x))
+                  , (1, return $ DaWrappa (Yeppers x) Nothing)
+                  , (1, return $ DaWrappa (Yeppers x) (Just x)) ]
+
+composeParappa :: Parappa Possibly Maybe Int -> Fun Int Int -> Fun Int Int -> Bool
+composeParappa x (Fun _ f) (Fun _ g) = functorCompose f g x

@@ -224,3 +224,10 @@ data LiftItOut f a = LiftItOut (f a) deriving (Eq, Show)
 
 instance Functor f => Functor (LiftItOut f) where
     fmap g (LiftItOut f) = LiftItOut (fmap g f)
+
+-- 6.
+
+data Parappa f g a = DaWrappa (f a) (g a) deriving (Eq, Show)
+
+instance (Functor f, Functor g) => Functor (Parappa f g) where
+    fmap h (DaWrappa f g) = DaWrappa (fmap h f) (fmap h g)
