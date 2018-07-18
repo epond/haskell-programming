@@ -1,4 +1,4 @@
-module Chapter17Applicatives where
+module Applicatives where
 
 import Control.Applicative
 import Data.List (elemIndex)
