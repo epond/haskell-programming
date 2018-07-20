@@ -71,3 +71,12 @@ instance Functor (Constant a) where
 instance Monoid a => Applicative (Constant a) where
     pure x = Constant mempty
     (<*>) (Constant x) (Constant y) = Constant $ mappend x y
+
+-- 17.7 You knew this was coming
+
+-- The checkers library can be used to check all the applicative laws for type [(String, String, Int)] like so:
+--   quickBatch $ applicative ([("b", "w", 1)])
+-- The value passed to applicative is not used; only its type is of interest to determine the Arbitrary instance.
+
+-- Instead, bottom can be used with explicit type to achieve the same effect:
+--   quickBatch $ applicative (undefined :: [(String, String, Int)])
