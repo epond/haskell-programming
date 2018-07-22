@@ -10,7 +10,6 @@ spec :: Spec
 spec = do
     describe "List Applicative" $ do
         it "obeys the Applicative laws" $ do
-            -- TODO This does not fail the test when the checkers checks fail!!!
             hspec $ testBatch (applicative (undefined :: List (String, String, Int)))
 
 instance Arbitrary a => Arbitrary (List a) where
