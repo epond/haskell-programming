@@ -9,6 +9,10 @@ import Test.QuickCheck.Classes
 spec :: Spec
 spec = do
     describe "List Applicative" $ do
+        it "gives the expected result" $ do
+            let f = Cons (+1) (Cons (*2) Nil)
+            let v = Cons 1 (Cons 2 Nil)
+            f <*> v `shouldBe` Cons 2 (Cons 3 (Cons 2 (Cons 4 Nil)))
         it "obeys the Applicative laws" $ do
             hspec $ testBatch (applicative (undefined :: List (String, String, Int)))
 
