@@ -11,7 +11,7 @@ spec = do
     describe "List Applicative" $ do
         it "obeys the Applicative laws" $ do
             -- TODO This does not fail the test when the checkers checks fail!!!
-            property $ quickBatch (applicative (undefined :: List (String, String, Int)))
+            hspec $ testBatch (applicative (undefined :: List (String, String, Int)))
 
 instance Arbitrary a => Arbitrary (List a) where
     arbitrary = do
@@ -22,3 +22,8 @@ instance Arbitrary a => Arbitrary (List a) where
                   , (1, return $ Cons x $ Cons y Nil) ]
 
 instance Eq a => EqProp (List a) where (=-=) = eq
+
+-- | Allows to insert a 'TestBatch' into a Spec. (code taken from hspec-checkers library)
+testBatch :: TestBatch -> Spec
+testBatch (batchName, tests) = describe ("laws for: " ++ batchName) $
+    foldr (>>) (return ()) (map (uncurry it) tests)
