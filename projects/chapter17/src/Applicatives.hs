@@ -123,3 +123,17 @@ runListApp :: List Int
 runListApp = f <*> v
     where f = Cons (+1) (Cons (*2) Nil)
           v = Cons 1 (Cons 2 Nil)
+          
+newtype ZipList' a = ZipList' (List a) deriving (Eq, Show)
+
+instance Functor ZipList' where
+    fmap f (ZipList' xs) = ZipList' $ fmap f xs
+
+instance Applicative ZipList' where
+    pure x = undefined
+    (<*>) = undefined
+
+take' :: Int -> List a -> List a
+take' 0 _ = Nil
+take' _ Nil = Nil
+take' n (Cons x xs) = Cons x (take' (n-1) xs)

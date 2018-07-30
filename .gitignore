@@ -14,3 +14,5 @@ cabal.sandbox.config
 .idea/
 *.iml
 
+# EMACS
+*.*#
