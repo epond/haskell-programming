@@ -130,10 +130,26 @@ instance Functor ZipList' where
     fmap f (ZipList' xs) = ZipList' $ fmap f xs
 
 instance Applicative ZipList' where
-    pure x = undefined
-    (<*>) = undefined
+-- This implementation of pure fails identity, composition and functor applicative laws
+--     pure x = ZipList' $ Cons x Nil
+    pure x = ZipList' $ repeat' x
+    (ZipList' Nil) <*> _ = ZipList' Nil
+    _ <*> (ZipList' Nil) = ZipList' Nil
+-- This was my first attempt but id can be used instead of (\f -> \x -> f x)
+--     (ZipList' fs) <*> (ZipList' xs) = ZipList' $ zipWith' (\f -> \x -> f x) fs xs
+    (ZipList' fs) <*> (ZipList' xs) = ZipList' $ zipWith' id fs xs
+
+zipWith' :: (a -> b -> c) -> List a -> List b -> List c
+zipWith' f = go
+    where
+        go Nil _ = Nil
+        go _ Nil = Nil
+        go (Cons x xs) (Cons y ys) = Cons (f x y) (go xs ys)
 
 take' :: Int -> List a -> List a
 take' 0 _ = Nil
 take' _ Nil = Nil
 take' n (Cons x xs) = Cons x (take' (n-1) xs)
+
+repeat' :: a -> List a
+repeat' x = Cons x $ repeat' x
