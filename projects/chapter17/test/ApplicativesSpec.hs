@@ -34,6 +34,9 @@ spec = do
 --             z <*> z' `shouldBe` (ZipList [10, 4, 11])
 --         it "obeys the Applicative laws" $ do
 --             hspec $ testBatch (applicative (undefined :: ZipList (String, String, Int)))
+    describe "Validation Functor" $ do
+        it "obeys the Functor laws" $ do
+            hspec $ testBatch (functor (undefined :: Validation String (String, String, Int)))
 
 instance Arbitrary a => Arbitrary (List a) where
     arbitrary = do
@@ -56,9 +59,9 @@ instance Arbitrary a => Arbitrary (ZipList' a) where
 instance Eq a => EqProp (ZipList' a) where
     xs =-= ys = xs' `eq` ys'
         where xs' = let (ZipList' l) = xs
-                    in take' 3000 l
+                    in take' 300 l
               ys' = let (ZipList' l) = ys
-                    in take' 3000 l
+                    in take' 300 l
 
 -- instance Eq a => EqProp (ZipList a) where
 --     xs =-= ys = xs' `eq` ys'
@@ -71,3 +74,12 @@ instance Eq a => EqProp (ZipList' a) where
 testBatch :: TestBatch -> Spec
 testBatch (batchName, tests) = describe ("laws for: " ++ batchName) $
     foldr (>>) (return ()) (map (uncurry it) tests)
+
+instance (Arbitrary e, Arbitrary a) => Arbitrary (Validation e a) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        frequency [ (1, return $ Fail x)
+                  , (1, return $ Succ y)]
+
+instance (Eq e, Eq a) => EqProp (Validation e a) where (=-=) = eq

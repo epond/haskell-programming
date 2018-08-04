@@ -153,3 +153,12 @@ take' n (Cons x xs) = Cons x (take' (n-1) xs)
 
 repeat' :: a -> List a
 repeat' x = Cons x $ repeat' x
+
+-- Exercise: Variations on Either
+
+data Validation e a = Fail e | Succ a deriving (Eq, Show)
+
+-- same as Either
+instance Functor (Validation e) where
+  fmap _ (Fail e) = Fail e
+  fmap f (Succ a) = Succ $ f a
