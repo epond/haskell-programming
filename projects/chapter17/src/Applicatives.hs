@@ -167,6 +167,7 @@ instance Functor (Validation e) where
 -- the Applicative instance is where it differs. it preserves all failures, not just the first one.
 instance Monoid e => Applicative (Validation e) where
   pure x = Succ x
+
   Succ f <*> Succ x = Succ (f x)
   Succ _ <*> Fail x = Fail x
   Fail x <*> Succ _ = Fail x
@@ -208,3 +209,19 @@ pureFun = pure
 
 apFun :: (->) c (a -> b) -> (->) c a -> (->) c b
 apFun = (<*>)
+
+
+-- Write instances for the following datatypes
+
+-- 1.
+data Pair a = Pair a a deriving (Eq, Show)
+
+instance Functor Pair where
+  fmap f (Pair x y) = Pair (f x) (f y)
+
+instance Applicative Pair where
+  -- pure :: a -> Pair a a
+  pure x = Pair x x
+
+  -- (<*>) :: Pair (a -> b) (a (-> b)
+  Pair g f <*> Pair y x = Pair (g y) (f x)

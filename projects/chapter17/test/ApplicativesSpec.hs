@@ -48,6 +48,9 @@ spec = do
             Fail [MooglesChewedWires] <*> Fail [StackOverflow] `shouldBe` (Fail [MooglesChewedWires, StackOverflow] :: Validation [Errors] Int)
         it "obeys the Applicative laws" $ do
             hspec $ testBatch (applicative (undefined :: Validation String (String, String, Int)))
+    describe "17.9 Chapter Exercises" $ do
+        it "Pair obeys the Applicative laws" $ do
+            hspec $ testBatch (applicative (undefined :: Pair (String, String, Int)))
 
 instance Arbitrary a => Arbitrary (List a) where
     arbitrary = do
@@ -96,3 +99,11 @@ instance (Arbitrary e, Arbitrary a) => Arbitrary (Validation e a) where
 instance (Eq e, Eq a) => EqProp (Validation e a) where (=-=) = eq
 
 data Errors = DividedByZero | StackOverflow | MooglesChewedWires deriving (Eq, Show)
+
+instance Arbitrary a => Arbitrary (Pair a) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        return (Pair x y)
+
+instance Eq a => EqProp (Pair a) where (=-=) = eq
