@@ -37,6 +37,17 @@ spec = do
     describe "Validation Functor" $ do
         it "obeys the Functor laws" $ do
             hspec $ testBatch (functor (undefined :: Validation String (String, String, Int)))
+    describe "Validation Applicative" $ do
+        it "gives the expected result when two successes" $ do
+            Succ (+1) <*> Succ 1 `shouldBe` (Succ 2 :: Validation [Errors] Int)
+        it "gives the expected result when a failure on the right" $ do
+            Succ (+1) <*> Fail [StackOverflow] `shouldBe` (Fail [StackOverflow] :: Validation [Errors] Int)
+        it "gives the expected result when a failure on the left" $ do
+            Fail [StackOverflow] <*> Succ 1 `shouldBe` (Fail [StackOverflow] :: Validation [Errors] Int)
+        it "gives the expected result when both arguments are failures" $ do
+            Fail [MooglesChewedWires] <*> Fail [StackOverflow] `shouldBe` (Fail [MooglesChewedWires, StackOverflow] :: Validation [Errors] Int)
+        it "obeys the Applicative laws" $ do
+            hspec $ testBatch (applicative (undefined :: Validation String (String, String, Int)))
 
 instance Arbitrary a => Arbitrary (List a) where
     arbitrary = do
@@ -83,3 +94,5 @@ instance (Arbitrary e, Arbitrary a) => Arbitrary (Validation e a) where
                   , (1, return $ Succ y)]
 
 instance (Eq e, Eq a) => EqProp (Validation e a) where (=-=) = eq
+
+data Errors = DividedByZero | StackOverflow | MooglesChewedWires deriving (Eq, Show)

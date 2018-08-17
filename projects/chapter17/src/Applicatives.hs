@@ -156,9 +156,18 @@ repeat' x = Cons x $ repeat' x
 
 -- Exercise: Variations on Either
 
+-- this is identical to the Either datatype
 data Validation e a = Fail e | Succ a deriving (Eq, Show)
 
--- same as Either
+-- the Functor instance is also the same as Either
 instance Functor (Validation e) where
   fmap _ (Fail e) = Fail e
   fmap f (Succ a) = Succ $ f a
+
+-- the Applicative instance is where it differs. it preserves all failures, not just the first one.
+instance Monoid e => Applicative (Validation e) where
+  pure x = Succ x
+  Succ f <*> Succ x = Succ (f x)
+  Succ _ <*> Fail x = Fail x
+  Fail x <*> Succ _ = Fail x
+  Fail x <*> Fail y = Fail $ x `mappend` y
