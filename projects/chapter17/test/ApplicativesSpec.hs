@@ -59,6 +59,8 @@ spec = do
             hspec $ testBatch (applicative (undefined :: Three' String (String, String, Int)))
         it "Four obeys the Applicative laws" $ do
             hspec $ testBatch (applicative (undefined :: Four String String String (String, String, Int)))
+        it "Four' obeys the Applicative laws" $ do
+            hspec $ testBatch (applicative (undefined :: Four' String (String, String, Int)))
 
 instance Arbitrary a => Arbitrary (List a) where
     arbitrary = do
@@ -151,3 +153,13 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four
         return (Four w x y z)
 
 instance (Eq a, Eq b, Eq c, Eq d) => EqProp (Four a b c d) where (=-=) = eq
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Four' a b) where
+    arbitrary = do
+        w <- arbitrary
+        x <- arbitrary
+        y <- arbitrary
+        z <- arbitrary
+        return (Four' w x y z)
+
+instance (Eq a, Eq b) => EqProp (Four' a b) where (=-=) = eq
