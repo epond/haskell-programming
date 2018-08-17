@@ -234,3 +234,14 @@ instance Monoid a => Applicative (Two a) where
   pure x = Two mempty x
 
   Two g f <*> Two y x = Two (g `mappend` y) (f x)
+
+-- 3.
+data Three a b c = Three a b c deriving (Eq, Show)
+
+instance Functor (Three a b) where
+  fmap f (Three x y z) = Three x y (f z)
+
+instance (Monoid a, Monoid b) => Applicative (Three a b) where
+  pure x = Three mempty mempty x
+
+  Three g h f <*> Three z y x = Three (g `mappend` z) (h `mappend` y) (f x)

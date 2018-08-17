@@ -53,6 +53,8 @@ spec = do
             hspec $ testBatch (applicative (undefined :: Pair (String, String, Int)))
         it "Two obeys the Applicative laws" $ do
             hspec $ testBatch (applicative (undefined :: Two String (String, String, Int)))
+        it "Three obeys the Applicative laws" $ do
+            hspec $ testBatch (applicative (undefined :: Three String String (String, String, Int)))
 
 instance Arbitrary a => Arbitrary (List a) where
     arbitrary = do
@@ -117,3 +119,12 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
         return (Two x y)
 
 instance (Eq a, Eq b) => EqProp (Two a b) where (=-=) = eq
+
+instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        z <- arbitrary
+        return (Three x y z)
+
+instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where (=-=) = eq
