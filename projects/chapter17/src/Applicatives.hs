@@ -250,9 +250,20 @@ instance (Monoid a, Monoid b) => Applicative (Three a b) where
 data Three' a b = Three' a b b deriving (Eq, Show)
 
 instance Functor (Three' a) where
-    fmap f (Three' x y z) = Three' x (f y) (f z)
+  fmap f (Three' x y z) = Three' x (f y) (f z)
 
 instance (Monoid a) => Applicative (Three' a) where
   pure x = Three' mempty x x
 
   Three' g h f <*> Three' z y x = Three' (g `mappend` z) (h y) (f x)
+
+-- 5.
+data Four a b c d = Four a b c d deriving (Eq, Show)
+
+instance Functor (Four a b c) where
+  fmap f (Four w x y z) = Four w x y (f z)
+
+instance (Monoid a, Monoid b, Monoid c) => Applicative (Four a b c) where
+  pure x = Four mempty mempty mempty x
+
+  Four i g h f <*> Four z y x w = Four (i `mappend` z) (g `mappend` y) (h `mappend` x) (f w)
