@@ -220,8 +220,17 @@ instance Functor Pair where
   fmap f (Pair x y) = Pair (f x) (f y)
 
 instance Applicative Pair where
-  -- pure :: a -> Pair a a
   pure x = Pair x x
 
-  -- (<*>) :: Pair (a -> b) (a (-> b)
   Pair g f <*> Pair y x = Pair (g y) (f x)
+
+-- 2.
+data Two a b = Two a b deriving (Eq, Show)
+
+instance Functor (Two a) where
+  fmap f (Two x y) = Two x (f y)
+
+instance Monoid a => Applicative (Two a) where
+  pure x = Two mempty x
+
+  Two g f <*> Two y x = Two (g `mappend` y) (f x)

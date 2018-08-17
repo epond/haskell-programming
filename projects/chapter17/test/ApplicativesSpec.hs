@@ -51,6 +51,8 @@ spec = do
     describe "17.9 Chapter Exercises" $ do
         it "Pair obeys the Applicative laws" $ do
             hspec $ testBatch (applicative (undefined :: Pair (String, String, Int)))
+        it "Two obeys the Applicative laws" $ do
+            hspec $ testBatch (applicative (undefined :: Two String (String, String, Int)))
 
 instance Arbitrary a => Arbitrary (List a) where
     arbitrary = do
@@ -107,3 +109,11 @@ instance Arbitrary a => Arbitrary (Pair a) where
         return (Pair x y)
 
 instance Eq a => EqProp (Pair a) where (=-=) = eq
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        return (Two x y)
+
+instance (Eq a, Eq b) => EqProp (Two a b) where (=-=) = eq
