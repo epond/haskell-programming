@@ -171,3 +171,40 @@ instance Monoid e => Applicative (Validation e) where
   Succ _ <*> Fail x = Fail x
   Fail x <*> Succ _ = Fail x
   Fail x <*> Fail y = Fail $ x `mappend` y
+
+
+-- 17.9 Chapter Exercises
+
+-- Specialise the types of the methods
+
+-- 1. Type []
+-- Methods
+pureList :: a -> [a]
+pureList = pure
+
+apList :: [(a -> b)] -> [a] -> [b]
+apList = (<*>)
+
+-- 2. Type IO
+-- Methods
+pureIO :: a -> IO a
+pureIO = pure
+
+apIO :: IO (a -> b) -> IO a -> IO b
+apIO = (<*>)
+
+-- 3. Type (,) a
+-- Methods
+pureTup :: Monoid b => a -> (b, a)
+pureTup = pure
+
+apTup :: Monoid c => (c, a -> b) -> (c, a) -> (c, b)
+apTup = (<*>)
+
+-- 4. Type (->) e
+-- Methods
+pureFun :: a -> (->) b a
+pureFun = pure
+
+apFun :: (->) c (a -> b) -> (->) c a -> (->) c b
+apFun = (<*>)
