@@ -278,3 +278,15 @@ instance (Monoid a) => Applicative (Four' a) where
   pure x = Four' mempty mempty mempty x
 
   Four' i g h f <*> Four' z y x w = Four' (i `mappend` z) (g `mappend` y) (h `mappend` x) (f w)
+  
+-- Combinations
+stops :: String
+stops = "pbtdkg"
+
+vowels :: String
+vowels = "aeiou"
+
+-- Use liftA3 from Control.Applicative to generate all possible
+-- combinations of the three input lists.
+combos :: [a] -> [b] -> [c] -> [(a, b, c)]
+combos = liftA3 (,,)
