@@ -55,3 +55,24 @@ mkSphericalCow'' name' age' weight' =
     \agey ->
       noNegative weight' >>=
       \weighty -> weightCheck (Cow nammy agey weighty)
+
+
+-- Short Exercise: Either Monad
+data Sum a b = First a | Second b deriving (Eq, Show)
+
+instance Functor (Sum a) where
+  fmap _ (First x) = First x
+  fmap f (Second x) = Second (f x)
+
+instance Applicative (Sum a) where
+  pure x = Second x
+  
+  Second f <*> Second x = Second (f x)
+  Second _ <*> First x  = First x
+  First x  <*> _        = First x
+
+instance Monad (Sum a) where
+  return = pure
+
+  First x >>= _  = First x
+  Second x >>= f = f x
