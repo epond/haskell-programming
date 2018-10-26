@@ -1,5 +1,7 @@
 module Monads where
 
+-- 18.4 Examples of Monad use
+
 data Cow = Cow {
   name :: String
 , age :: Int
@@ -35,3 +37,21 @@ mkSphericalCow name' age' weight' =
             Nothing -> Nothing
             Just weighty ->
               weightCheck (Cow nammy agey weighty)
+
+-- Do syntax isn't just for IO.
+mkSphericalCow' :: String -> Int -> Int -> Maybe Cow
+mkSphericalCow' name' age' weight' = do
+  nammy <- noEmpty name'
+  agey <- noNegative age'
+  weighty <- noNegative weight'
+  weightCheck (Cow nammy agey weighty)
+
+-- Stack up the nested lambdas.
+mkSphericalCow'' :: String -> Int -> Int -> Maybe Cow
+mkSphericalCow'' name' age' weight' =
+  noEmpty name' >>=
+  \nammy ->
+    noNegative age' >>=
+    \agey ->
+      noNegative weight' >>=
+      \weighty -> weightCheck (Cow nammy agey weighty)
