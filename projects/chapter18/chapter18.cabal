@@ -20,4 +20,6 @@ test-suite spec
   other-modules:   MonadsSpec
   build-depends:   base,
                    hspec,
+                   QuickCheck,
+                   checkers,
                    chapter18
