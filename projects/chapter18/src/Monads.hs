@@ -93,3 +93,18 @@ instance Applicative Nope where
 instance Monad Nope where
   return = pure
   NopeDotJpg >>= _ = NopeDotJpg
+
+-- 2.
+data PhhhbbtttEither b a = Left a | Right b
+  deriving (Eq, Show)
+
+instance Functor (PhhhbbtttEither a) where
+  fmap _ _ = undefined
+
+instance Applicative (PhhhbbtttEither a) where
+  pure x = Monads.Left x
+  _ <*> _ = undefined
+
+instance Monad (PhhhbbtttEither a) where
+  return = undefined
+  _ >>= _ = undefined
