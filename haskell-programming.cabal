@@ -23,8 +23,7 @@ library
                    Chapter14Testing,
                    Chapter15Monoids,
                    Chapter15Semigroups,
-                   Chapter16Functors,
-                   Chapter17Applicatives
+                   Chapter16Functors
   hs-source-dirs:  src
   default-language:Haskell2010
   build-depends:   base,
