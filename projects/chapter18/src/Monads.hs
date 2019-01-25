@@ -65,7 +65,7 @@ instance Functor (Sum a) where
   fmap f (Second x) = Second (f x)
 
 instance Applicative (Sum a) where
-  pure x = Second x
+  pure = Second
   
   Second f <*> Second x = Second (f x)
   Second _ <*> First x  = First x
@@ -99,12 +99,16 @@ data PhhhbbtttEither b a = Left a | Right b
   deriving (Eq, Show)
 
 instance Functor (PhhhbbtttEither a) where
-  fmap _ _ = undefined
+  fmap _ (Monads.Right x) = Monads.Right x
+  fmap f (Monads.Left x) = Monads.Left (f x)
 
 instance Applicative (PhhhbbtttEither a) where
-  pure x = Monads.Left x
-  _ <*> _ = undefined
+  pure = Monads.Left
+  _ <*> Monads.Right e = Monads.Right e
+  Monads.Right e <*> _ = Monads.Right e
+  Monads.Left f <*> Monads.Left x = Monads.Left (f x)
 
 instance Monad (PhhhbbtttEither a) where
-  return = undefined
-  _ >>= _ = undefined
+  return = pure
+  Monads.Right e >>= _ = Monads.Right e
+  Monads.Left x >>= f = f x
