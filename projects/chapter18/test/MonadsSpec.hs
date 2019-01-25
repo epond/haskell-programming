@@ -13,6 +13,8 @@ spec = do
       hspec $ testBatch (monad (undefined :: Nope (String, String, Int)))
     it "PhhhbbtttEither obeys the Monad laws" $ do
       hspec $ testBatch (monad (undefined :: PhhhbbtttEither String (String, String, Int)))
+    it "Identity obeys the Monad laws" $ do
+      hspec $ testBatch (monad (undefined :: Identity (String, String, Int)))
       
 instance Arbitrary (Nope a) where
   arbitrary = return NopeDotJpg
@@ -27,6 +29,13 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (PhhhbbtttEither b a) where
               , (1, return (Monads.Right y))]
 
 instance (Eq a, Eq b) => EqProp (PhhhbbtttEither b a) where (=-=) = eq
+
+instance Arbitrary a => Arbitrary (Identity a) where
+  arbitrary = do
+    x <- arbitrary
+    return (Identity x)
+
+instance Eq a => EqProp (Identity a) where (=-=) = eq
 
 -- | Allows to insert a 'TestBatch' into a Spec. (code taken from hspec-checkers library)
 testBatch :: TestBatch -> Spec

@@ -112,3 +112,17 @@ instance Monad (PhhhbbtttEither a) where
   return = pure
   Monads.Right e >>= _ = Monads.Right e
   Monads.Left x >>= f = f x
+
+-- 3.
+newtype Identity a = Identity a deriving (Eq, Ord, Show)
+
+instance Functor Identity where
+  fmap f (Identity x) = Identity (f x)
+
+instance Applicative Identity where
+  pure = Identity
+  Identity f <*> Identity x = Identity (f x)
+
+instance Monad Identity where
+  return = pure
+  Identity x >>= f = f x
