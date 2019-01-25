@@ -1,6 +1,7 @@
 module Monads where
 
 import Data.Monoid ((<>))
+import Control.Monad (join)
 
 -- 18.4 Examples of Monad use
 
@@ -164,3 +165,9 @@ instance Monad List where
 
   -- (>>=) :: List a -> (a -> List b) -> List b
   (>>=) l f = concat' $ fmap f l
+
+
+-- Write using the methods provided by Monad and Functor.
+-- 1.
+j :: Monad m => m (m a) -> m a
+j = join

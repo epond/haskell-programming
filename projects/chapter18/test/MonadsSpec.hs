@@ -8,7 +8,7 @@ import Test.QuickCheck.Classes
 
 spec :: Spec
 spec = do
-  describe "18.7 Chapter Exercises" $ do
+  describe "18.7 Chapter Exercises part 1" $ do
     it "Nope obeys the Monad laws" $ do
       hspec $ testBatch (monad (undefined :: Nope (String, String, Int)))
     it "PhhhbbtttEither obeys the Monad laws" $ do
@@ -17,6 +17,10 @@ spec = do
       hspec $ testBatch (monad (undefined :: Identity (String, String, Int)))
     it "List obeys the Monad laws" $ do
       hspec $ testBatch (monad (undefined :: List (String, String, Int)))
+  describe "18.7 Chapter Exercises part 2" $ do
+    it "j function behaves as expected" $ do
+      j [[1, 2], [], [3]] `shouldBe` [1, 2, 3]
+      j (Just (Just 1)) `shouldBe` Just 1
       
 instance Arbitrary (Nope a) where
   arbitrary = return NopeDotJpg
