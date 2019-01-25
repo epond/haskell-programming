@@ -2,6 +2,7 @@ module Monads where
 
 import Data.Monoid ((<>))
 import Control.Monad (join)
+import Control.Applicative (liftA2)
 
 -- 18.4 Examples of Monad use
 
@@ -175,3 +176,7 @@ j = join
 -- 2.
 l1 :: Monad m => (a -> b) -> m a -> m b
 l1 = fmap
+
+-- 3.
+l2 :: Monad m => (a -> b -> c) -> m a -> m b -> m c
+l2 = liftA2
