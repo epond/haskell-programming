@@ -171,3 +171,7 @@ instance Monad List where
 -- 1.
 j :: Monad m => m (m a) -> m a
 j = join
+
+-- 2.
+l1 :: Monad m => (a -> b) -> m a -> m b
+l1 = fmap
