@@ -15,6 +15,8 @@ spec = do
       hspec $ testBatch (monad (undefined :: PhhhbbtttEither String (String, String, Int)))
     it "Identity obeys the Monad laws" $ do
       hspec $ testBatch (monad (undefined :: Identity (String, String, Int)))
+    it "List obeys the Monad laws" $ do
+      hspec $ testBatch (monad (undefined :: List (String, String, Int)))
       
 instance Arbitrary (Nope a) where
   arbitrary = return NopeDotJpg
@@ -36,6 +38,16 @@ instance Arbitrary a => Arbitrary (Identity a) where
     return (Identity x)
 
 instance Eq a => EqProp (Identity a) where (=-=) = eq
+
+instance Arbitrary a => Arbitrary (List a) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        frequency [ (1, return Nil)
+                  , (1, return $ Cons x Nil)
+                  , (1, return $ Cons x $ Cons y Nil) ]
+
+instance Eq a => EqProp (List a) where (=-=) = eq
 
 -- | Allows to insert a 'TestBatch' into a Spec. (code taken from hspec-checkers library)
 testBatch :: TestBatch -> Spec

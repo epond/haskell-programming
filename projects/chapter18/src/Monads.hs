@@ -1,5 +1,7 @@
 module Monads where
 
+import Data.Monoid ((<>))
+
 -- 18.4 Examples of Monad use
 
 data Cow = Cow {
@@ -126,3 +128,39 @@ instance Applicative Identity where
 instance Monad Identity where
   return = pure
   Identity x >>= f = f x
+
+-- 4.
+data List a = Nil | Cons a (List a) deriving (Eq, Ord, Show)
+
+fold :: (a -> b -> b) -> b -> List a -> b
+fold _ b Nil        = b
+fold f b (Cons h t) = f h (fold f b t)
+
+append :: List a -> List a -> List a
+append Nil ys = ys
+append (Cons x xs) ys = Cons x $ xs `append` ys
+
+concat' :: List (List a) -> List a
+concat' = fold append Nil
+
+instance Functor List where
+  fmap _ Nil = Nil
+  fmap f (Cons x rest) = Cons (f x) $ fmap f rest
+
+instance Monoid (List a) where
+    mempty = Nil
+    x `mappend` y = x `append` y
+
+instance Applicative List where
+    -- pure :: a -> f a
+    pure x = Cons x (Nil)
+    -- (<*>) :: f (a -> b) -> f a -> f b
+    Nil <*> _ = Nil
+    _ <*> Nil = Nil
+    Cons f fs <*> xs = (f <$> xs) <> (fs <*> xs)
+
+instance Monad List where
+  return x = Cons x Nil
+
+  -- (>>=) :: List a -> (a -> List b) -> List b
+  (>>=) l f = concat' $ fmap f l
