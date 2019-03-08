@@ -169,6 +169,15 @@ instance Monad List where
 
 
 -- Write using the methods provided by Monad and Functor.
+--class Applicative m => Monad (m :: * -> *) where
+--  (>>=) :: m a -> (a -> m b) -> m b
+--  (>>) :: m a -> m b -> m b
+--  return :: a -> m a
+--  fail :: String -> m a
+--class Functor (f :: * -> *) where
+--  fmap :: (a -> b) -> f a -> f b
+--  (<$) :: a -> f b -> f a
+
 -- 1.
 j :: Monad m => m (m a) -> m a
 j x = x >>= id
@@ -178,8 +187,12 @@ l1 :: Monad m => (a -> b) -> m a -> m b
 l1 = fmap
 
 -- 3.
+-- liftA2 is explained in Chapter 17.5 Applicative in use
+-- (,) <$> [1,2] <*> [3,4] = [(1,3),(1,4),(2,3),(2,4)]
+-- liftA2 (,) [1,2] [3,4]  = [(1,3),(1,4),(2,3),(2,4)]
+-- l2 (,) [1,2] [3,4]      = [(1,3),(1,4),(2,3),(2,4)]
 l2 :: Monad m => (a -> b -> c) -> m a -> m b -> m c
-l2 = liftA2
+l2 f x = (<*>) (fmap f x)
 
 -- 4.
 a :: Monad m => m a -> m (a -> b) -> m b
