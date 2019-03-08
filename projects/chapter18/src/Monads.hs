@@ -201,4 +201,8 @@ a = flip (<*>)
 -- 5.
 meh :: Monad m => [a] -> (a -> m b) -> m [b]
 meh [] _ = pure []
-meh (x:xs) f = undefined --(f x) >>= 
+meh (x:xs) f = undefined -- TODO
+
+-- 6.
+flipType :: (Monad m) => [m a] -> m [a]
+flipType = undefined -- TODO
