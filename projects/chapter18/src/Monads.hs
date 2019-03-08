@@ -171,7 +171,7 @@ instance Monad List where
 -- Write using the methods provided by Monad and Functor.
 -- 1.
 j :: Monad m => m (m a) -> m a
-j = join
+j x = x >>= id
 
 -- 2.
 l1 :: Monad m => (a -> b) -> m a -> m b
