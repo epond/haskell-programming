@@ -25,3 +25,11 @@ spec = do
   describe "20.5 Exercises: Library functions - implement in terms of foldMap and foldr" $ do
     it "mysum :: (Foldable t, Num a) => t a -> a" $ do
       mysum (Just 3) `shouldBe` 3
+      mysum [3,7,5] `shouldBe` 15
+      mysum (9, 4) `shouldBe` 4
+      mysum Nothing `shouldBe` 0
+    it "myproduct :: (Foldable t, Num a) => t a -> a" $ do
+      myproduct (Just 3) `shouldBe` 3
+      myproduct [3,7,5] `shouldBe` 105
+      myproduct (9, 4) `shouldBe` 4
+      myproduct Nothing `shouldBe` 1
