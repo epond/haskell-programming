@@ -22,3 +22,6 @@ spec = do
       getFirst (foldMap First [Just 1, Nothing, Just 5]) `shouldBe` Just 1
     it "foldMap can have a different mapping function to the Monoid its using" $ do
       getProduct (foldMap (*5) (map Product [1..3])) `shouldBe` 750
+  describe "20.5 Exercises: Library functions - implement in terms of foldMap and foldr" $ do
+    it "mysum :: (Foldable t, Num a) => t a -> a" $ do
+      mysum (Just 3) `shouldBe` 3
