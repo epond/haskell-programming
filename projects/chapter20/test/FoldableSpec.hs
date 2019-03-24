@@ -33,3 +33,9 @@ spec = do
       myproduct [3,7,5] `shouldBe` 105
       myproduct (9, 4) `shouldBe` 4
       myproduct Nothing `shouldBe` 1
+    it "myelem :: (Foldable t, Eq a) => a -> t a -> Bool" $ do
+      myelem 2 [1,2,3] `shouldBe` True
+      myelem 2 (Just 3) `shouldBe` False
+      myelem 3 (Just 3) `shouldBe` True
+      myelem 3 Nothing `shouldBe` False
+      fmap (myelem 3) [Right 1, Right 2, Right 3] `shouldBe` [False, False, True]
