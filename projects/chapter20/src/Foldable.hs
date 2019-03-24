@@ -3,10 +3,13 @@ module Foldable where
 import Data.Monoid
 
 mysum :: (Foldable t, Num a) => t a -> a
-mysum y = getSum $ foldMap Sum y
+mysum = getSum . foldMap Sum
 
 myproduct :: (Foldable t, Num a) => t a -> a
-myproduct y = getProduct $ foldMap Product y
+myproduct = getProduct . foldMap Product
 
 myelem :: (Foldable t, Eq a) => a -> t a -> Bool
-myelem x xs = getAny $ foldMap (\y -> Any (x == y)) xs
+myelem x = getAny . foldMap (\y -> Any (x == y))
+
+myminimum :: (Foldable t, Ord a) => t a -> Maybe a
+myminimum = undefined
