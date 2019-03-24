@@ -39,3 +39,7 @@ spec = do
       myelem 3 (Just 3) `shouldBe` True
       myelem 3 Nothing `shouldBe` False
       fmap (myelem 3) [Right 1, Right 2, Right 3] `shouldBe` [False, False, True]
+    it "myminimum :: (Foldable t, Ord a) => t a -> Maybe a" $ do
+      myminimum "minute" `shouldBe` Just 'e'
+      myminimum (Nothing :: Maybe Int) `shouldBe` Nothing
+      myminimum (Left 'a' :: Either Char Char) `shouldBe` Nothing
