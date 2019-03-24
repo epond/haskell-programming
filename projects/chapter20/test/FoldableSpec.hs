@@ -43,3 +43,7 @@ spec = do
       myminimum "minute" `shouldBe` Just 'e'
       myminimum (Nothing :: Maybe Int) `shouldBe` Nothing
       myminimum (Left 'a' :: Either Char Char) `shouldBe` Nothing
+    it "mymaximum :: (Foldable t, Ord a) => t a -> Maybe a" $ do
+      mymaximum "minute" `shouldBe` Just 'u'
+      mymaximum (Nothing :: Maybe Int) `shouldBe` Nothing
+      mymaximum (Left 'a' :: Either Char Char) `shouldBe` Nothing

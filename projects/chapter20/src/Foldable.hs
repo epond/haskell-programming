@@ -18,3 +18,10 @@ myminimum = foldr minMaybe Nothing
 minMaybe :: Ord a => a -> Maybe a -> Maybe a
 minMaybe x Nothing = Just x
 minMaybe x (Just y) = if x < y then Just x else Just y
+
+mymaximum :: (Foldable t, Ord a) => t a -> Maybe a
+mymaximum = foldr maxMaybe Nothing
+
+maxMaybe :: Ord a => a -> Maybe a -> Maybe a
+maxMaybe x Nothing = Just x
+maxMaybe x (Just y) = if x > y then Just x else Just y
