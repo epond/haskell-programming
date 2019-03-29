@@ -47,3 +47,9 @@ spec = do
       mymaximum "minute" `shouldBe` Just 'u'
       mymaximum (Nothing :: Maybe Int) `shouldBe` Nothing
       mymaximum (Left 'a' :: Either Char Char) `shouldBe` Nothing
+    it "mynull :: (Foldable t) => t a -> Bool" $ do
+      mynull (Left 3) `shouldBe` True
+      mynull [] `shouldBe` True
+      mynull Nothing `shouldBe` True
+      mynull (1, 3) `shouldBe` False
+      mynull [1] `shouldBe` False

@@ -25,3 +25,6 @@ mymaximum = foldr maxMaybe Nothing
 maxMaybe :: Ord a => a -> Maybe a -> Maybe a
 maxMaybe x Nothing = Just x
 maxMaybe x (Just y) = if x > y then Just x else Just y
+
+mynull :: (Foldable t) => t a -> Bool
+mynull = getAll . foldMap (\_ -> All False)
