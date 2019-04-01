@@ -58,3 +58,8 @@ spec = do
       mylength [3,7,5] `shouldBe` 3
       mylength (9, 4) `shouldBe` 1
       mylength Nothing `shouldBe` 0
+    it "mytoList :: Foldable t => t a -> [a]" $ do
+      mytoList (Nothing :: Maybe Bool) `shouldBe` []
+      mytoList (Just 3) `shouldBe` [3]
+      mytoList (Right 'c') `shouldBe` ['c']
+      mytoList [2,5,7] `shouldBe` [2,5,7]
