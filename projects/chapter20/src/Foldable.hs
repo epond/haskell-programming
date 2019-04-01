@@ -31,3 +31,6 @@ mylength = getSum . foldMap (Sum . (const 1))
 mytoList :: Foldable t => t a -> [a]
 mytoList = foldr mklist []
   where mklist x xs = x : xs
+
+myfold :: (Foldable t, Monoid m) => t m -> m
+myfold = foldMap id
