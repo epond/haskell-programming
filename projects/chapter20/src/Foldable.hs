@@ -28,3 +28,6 @@ maxMaybe x (Just y) = if x > y then Just x else Just y
 
 mynull :: (Foldable t) => t a -> Bool
 mynull = getAll . foldMap (\_ -> All False)
+
+mylength :: Foldable t => t a -> Int
+mylength = getSum . foldMap (Sum . (const 1))

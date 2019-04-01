@@ -53,3 +53,8 @@ spec = do
       mynull Nothing `shouldBe` True
       mynull (1, 3) `shouldBe` False
       mynull [1] `shouldBe` False
+    it "mylength :: (Foldable t, Num a) => t a -> a" $ do
+      mylength (Just 3) `shouldBe` 1
+      mylength [3,7,5] `shouldBe` 3
+      mylength (9, 4) `shouldBe` 1
+      mylength Nothing `shouldBe` 0
