@@ -64,4 +64,6 @@ spec = do
       mytoList (Right 'c') `shouldBe` ['c']
       mytoList [2,5,7] `shouldBe` [2,5,7]
     it "myfold :: (Foldable t, Monoid m) => t m -> m" $ do
-      myfold ???
+      myfold [] `shouldBe` ()
+      myfold [Sum 2, Sum 4] `shouldBe` Sum 6
+      myfold [Product 2, Product 4] `shouldBe` Product 8
