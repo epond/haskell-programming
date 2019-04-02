@@ -34,3 +34,6 @@ mytoList = foldr mklist []
 
 myfold :: (Foldable t, Monoid m) => t m -> m
 myfold = foldMap id
+
+myfoldMap :: (Foldable t, Monoid m) => (a -> m) -> t a -> m
+myfoldMap f = foldr (\x y -> (f x) `mappend` y) mempty

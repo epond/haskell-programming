@@ -67,3 +67,7 @@ spec = do
       myfold [] `shouldBe` ()
       myfold [Sum 2, Sum 4] `shouldBe` Sum 6
       myfold [Product 2, Product 4] `shouldBe` Product 8
+    it "myfoldMap :: (Foldable t, Monoid m) => (a -> m) -> t a -> m" $ do
+      myfoldMap Sum [1, 3, 5] `shouldBe` Sum 9
+      myfoldMap Product [1, 3, 5] `shouldBe` Product 15
+      
