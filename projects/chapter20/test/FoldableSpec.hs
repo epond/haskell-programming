@@ -85,3 +85,5 @@ spec = do
       fold (Three' 'q' 2 (Sum 9)) `shouldBe` Sum 9
     it "Foldable instance for Four'" $ do
       fold (Four' False 1 3 9) `shouldBe` Sum 9
+    it "Filter function for Foldable types using foldMap" $ do
+      filterF even [1,2,3,4,5] `shouldBe` [2,4]
