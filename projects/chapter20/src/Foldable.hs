@@ -47,3 +47,9 @@ data Constant a b = Constant b
 
 instance Foldable (Constant a) where
   foldMap f (Constant x) = f x
+
+-- 2.
+data Two a b = Two a b
+
+instance Foldable (Two a) where
+  foldMap f (Two _ x) = f x

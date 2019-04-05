@@ -74,3 +74,5 @@ spec = do
     it "Foldable instance for Constant" $ do
       foldMap Sum (Constant 3) `shouldBe` Sum 3
       fold (Constant (Sum 4)) `shouldBe` Sum 4
+    it "Foldable instance for Two" $ do
+      foldMap Sum (Two 3 5) `shouldBe` Sum 5
