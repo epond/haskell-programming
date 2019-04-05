@@ -70,4 +70,7 @@ spec = do
     it "myfoldMap :: (Foldable t, Monoid m) => (a -> m) -> t a -> m" $ do
       myfoldMap Sum [1, 3, 5] `shouldBe` Sum 9
       myfoldMap Product [1, 3, 5] `shouldBe` Product 15
-      
+  describe "20.6: Chapter Exercises" $ do
+    it "Foldable instance for Constant" $ do
+      foldMap Sum (Constant 3) `shouldBe` Sum 3
+      fold (Constant (Sum 4)) `shouldBe` Sum 4

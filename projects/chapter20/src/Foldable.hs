@@ -42,5 +42,8 @@ myfoldMap f = foldr (\x y -> (f x) `mappend` y) mempty
 
 -- 20.6 Chapter Exercises
 
+-- 1.
+data Constant a b = Constant b
+
 instance Foldable (Constant a) where
-  foldMap f (Constant x) = 
+  foldMap f (Constant x) = f x
