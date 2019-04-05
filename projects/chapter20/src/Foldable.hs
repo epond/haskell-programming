@@ -65,3 +65,9 @@ data Three' a b = Three' a b b
 
 instance Foldable (Three' a) where
   foldMap f (Three' _ _ x) = f x
+
+-- 5.
+data Four' a b = Four' a b b b
+
+instance Foldable (Four' a) where
+  foldMap f (Four' _ _ _ x) = f x
