@@ -3,6 +3,8 @@ module Foldable where
 import Data.Monoid
 import Data.Semigroup
 
+-- 20.5 Exercises
+
 mysum :: (Foldable t, Num a) => t a -> a
 mysum = getSum . foldMap Sum
 
@@ -37,3 +39,8 @@ myfold = foldMap id
 
 myfoldMap :: (Foldable t, Monoid m) => (a -> m) -> t a -> m
 myfoldMap f = foldr (\x y -> (f x) `mappend` y) mempty
+
+-- 20.6 Chapter Exercises
+
+instance Foldable (Constant a) where
+  foldMap f (Constant x) = 
