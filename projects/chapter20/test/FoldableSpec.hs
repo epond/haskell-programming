@@ -76,5 +76,10 @@ spec = do
       fold (Constant (Sum 4)) `shouldBe` Sum 4
     it "Foldable instance for Two" $ do
       foldMap Sum (Two 3 5) `shouldBe` Sum 5
+      fold (Two 3 (Sum 5)) `shouldBe` Sum 5
     it "Foldable instance for Three" $ do
       foldMap Sum (Three 'q' False 9) `shouldBe` Sum 9
+      fold (Three 'q' False (Sum 9)) `shouldBe` Sum 9
+    it "Foldable instance for Three'" $ do
+      foldMap Sum (Three' 'q' 2 9) `shouldBe` Sum 9
+      fold (Three' 'q' 2 (Sum 9)) `shouldBe` Sum 9
