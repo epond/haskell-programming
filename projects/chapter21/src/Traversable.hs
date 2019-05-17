@@ -27,3 +27,19 @@ instance Foldable (Constant a) where
 
 instance Traversable (Constant a) where
   traverse _ (Constant x) = pure $ Constant x
+
+-- Maybe
+data Optional a = Nada | Yep a
+  deriving (Eq, Ord, Show)
+
+instance Functor Optional where
+  fmap f (Yep x) = Yep (f x)
+  fmap _ Nada = Nada
+
+instance Foldable Optional where
+  foldMap f (Yep x) = f x
+  foldMap _ Nada = mempty
+
+instance Traversable Optional where
+  traverse f (Yep x) = Yep <$> f x
+  traverse _ Nada = pure Nada
