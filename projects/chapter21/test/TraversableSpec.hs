@@ -11,6 +11,8 @@ spec = do
   describe "21.12 Chapter Exercises" $ do
     it "Identity instance of Traversable" $ do
       hspec $ testBatch (traversable (undefined :: Identity (Int, Int, [Int])))
+    it "Identity instance of Constant" $ do
+      hspec $ testBatch (traversable (undefined :: Constant String (Int, Int, [Int])))
 
 instance Arbitrary a => Arbitrary (Identity a) where
   arbitrary = do
@@ -18,6 +20,13 @@ instance Arbitrary a => Arbitrary (Identity a) where
     return (Identity x)
 
 instance Eq a => EqProp (Identity a) where (=-=) = eq
+
+instance Arbitrary b => Arbitrary (Constant b a) where
+  arbitrary = do
+    x <- arbitrary
+    return (Constant x)
+
+instance (Eq a, Eq b) => EqProp (Constant b a) where (=-=) = eq
 
 -- | Allows to insert a 'TestBatch' into a Spec. (code taken from hspec-checkers library)
 testBatch :: TestBatch -> Spec
