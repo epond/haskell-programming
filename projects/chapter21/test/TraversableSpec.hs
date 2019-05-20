@@ -15,6 +15,8 @@ spec = do
       hspec $ testBatch (traversable (undefined :: Constant String (Int, Int, [Int])))
     it "Optional instance of Traversable" $ do
       hspec $ testBatch (traversable (undefined :: Optional (Int, Int, [Int])))
+    it "List instance of Traversable" $ do
+      hspec $ testBatch (traversable (undefined :: List (Int, Int, [Int])))
 
 instance Arbitrary a => Arbitrary (Identity a) where
   arbitrary = do
@@ -38,6 +40,16 @@ instance Arbitrary a => Arbitrary (Optional a) where
 
 instance Eq a => EqProp (Optional a) where (=-=) = eq
 
+instance Arbitrary a => Arbitrary (List a) where
+    arbitrary = do
+        x <- arbitrary
+        y <- arbitrary
+        frequency [ (1, return Nil)
+                  , (1, return $ Cons x Nil)
+                  , (1, return $ Cons x $ Cons y Nil) ]
+
+instance Eq a => EqProp (List a) where (=-=) = eq
+  
 -- | Allows to insert a 'TestBatch' into a Spec. (code taken from hspec-checkers library)
 testBatch :: TestBatch -> Spec
 testBatch (batchName, tests) = describe ("laws for: " ++ batchName) $
