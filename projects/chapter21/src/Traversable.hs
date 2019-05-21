@@ -59,3 +59,7 @@ instance Foldable List where
 instance Traversable List where
   traverse _ Nil = pure Nil
   traverse f (Cons x xs) = Cons <$> f x <*> traverse f xs
+
+-- (<$>) ::                         Functor f =>   (a -> b) -> f a -> f b
+-- (<*>) ::                     Applicative f => f (a -> b) -> f a -> f b
+-- traverse :: (Traversable t, Applicative f) => (a -> f b) -> t a -> f (t b)
