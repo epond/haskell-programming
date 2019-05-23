@@ -63,3 +63,16 @@ instance Traversable List where
 -- (<$>) ::                         Functor f =>   (a -> b) -> f a -> f b
 -- (<*>) ::                     Applicative f => f (a -> b) -> f a -> f b
 -- traverse :: (Traversable t, Applicative f) => (a -> f b) -> t a -> f (t b)
+
+-- Three
+data Three a b c = Three a b c
+  deriving (Eq, Ord, Show)
+
+instance Functor (Three a b) where
+  fmap f (Three x y z) = Three x y (f z)
+
+instance Foldable (Three a b) where
+  foldMap f (Three x y z) = f z
+
+instance Traversable (Three a b) where
+  traverse f (Three x y z) = (Three x y) <$> (f z)
