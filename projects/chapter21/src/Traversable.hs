@@ -76,3 +76,16 @@ instance Foldable (Three a b) where
 
 instance Traversable (Three a b) where
   traverse f (Three x y z) = (Three x y) <$> (f z)
+
+-- Pair
+data Pair a b = Pair a b
+  deriving (Eq, Ord, Show)
+
+instance Functor (Pair a) where
+  fmap f (Pair x y) = Pair x (f y)
+
+instance Foldable (Pair a) where
+  foldMap f (Pair x y) = f y
+
+instance Traversable (Pair a) where
+  traverse f (Pair x y) = (Pair x) <$> (f y)
