@@ -102,3 +102,16 @@ instance Foldable (Big a) where
 
 instance Traversable (Big a) where
   traverse f (Big x y z) = (Big x) <$> (f y) <*> (f z)
+
+-- Bigger
+data Bigger a b = Bigger a b b b
+  deriving (Eq, Ord, Show)
+
+instance Functor (Bigger a) where
+  fmap f (Bigger w x y z) = Bigger w (f x) (f y) (f z)
+
+instance Foldable (Bigger a) where
+  foldMap f (Bigger w x y z) = (f x) `mappend` (f y) `mappend` (f z)
+
+instance Traversable (Bigger a) where
+  traverse f (Bigger w x y z) = (Bigger w) <$> (f x) <*> (f y) <*> (f z)
