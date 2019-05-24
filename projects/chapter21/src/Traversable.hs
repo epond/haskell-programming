@@ -89,3 +89,16 @@ instance Foldable (Pair a) where
 
 instance Traversable (Pair a) where
   traverse f (Pair x y) = (Pair x) <$> (f y)
+
+-- Big
+data Big a b = Big a b b
+  deriving (Eq, Ord, Show)
+
+instance Functor (Big a) where
+  fmap f (Big x y z) = Big x (f y) (f z)
+
+instance Foldable (Big a) where
+  foldMap f (Big x y z) = (f y) `mappend` (f z)
+
+instance Traversable (Big a) where
+  traverse f (Big x y z) = (Big x) <$> (f y) <*> (f z)

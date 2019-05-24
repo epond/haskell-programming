@@ -21,6 +21,8 @@ spec = do
       hspec $ testBatch (traversable (undefined :: Three Bool String (Int, Int, [Int])))
     it "Pair instance of Traversable" $ do
       hspec $ testBatch (traversable (undefined :: Pair String (Int, Int, [Int])))
+    it "Big instance of Traversable" $ do
+      hspec $ testBatch (traversable (undefined :: Big String (Int, Int, [Int])))
 
 instance Arbitrary a => Arbitrary (Identity a) where
   arbitrary = do
@@ -70,6 +72,15 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Pair a b) where
     return (Pair x y)
 
 instance (Eq a, Eq b) => EqProp (Pair a b) where (=-=) = eq
+      
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Big a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    z <- arbitrary
+    return (Big x y z)
+
+instance (Eq a, Eq b) => EqProp (Big a b) where (=-=) = eq
       
 -- | Allows to insert a 'TestBatch' into a Spec. (code taken from hspec-checkers library)
 testBatch :: TestBatch -> Spec
