@@ -1,0 +1,5 @@
+flags: {}
+packages:
+- '.'
+# See all available stackage snapshots at https://www.stackage.org/snapshots
+resolver: lts-10.2
