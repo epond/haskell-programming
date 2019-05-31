@@ -12,3 +12,7 @@ spec = do
       fmapped "Chris" `shouldBe` "SIRHC"
     it "tupled" $ do
       tupled "Julie" `shouldBe` ("JULIE","eiluJ")
+  describe "Exercise: Reading Comprehension" $ do
+    it "myLiftA2" $ do
+      (myLiftA2 Dog dogName address) bigbird `shouldBe`
+        Dog (DogName "Barkley") (Address "Sesame Street")

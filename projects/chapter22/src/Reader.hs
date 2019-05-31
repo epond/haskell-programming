@@ -1,3 +1,5 @@
+{-# LANGUAGE InstanceSigs #-}
+
 module Reader where
 
 import Control.Applicative
@@ -52,6 +54,11 @@ tupled = (,) <$> cap <*> rev
 --tupled = cap >>= (\x -> rev >>= (\y -> return (x,y)))
 
 
+newtype Reader r a = Reader { runReader :: r -> a }
+
+ask :: Reader a a
+ask = Reader id
+
 -- Demonstrating the function Applicative
 
 newtype HumanName = HumanName String deriving (Eq, Show)
@@ -69,8 +76,8 @@ data Dog = Dog {
 , dogsAddress :: Address
 } deriving (Eq, Show)
 
-pers :: Person
-pers = Person (HumanName "Big Bird") (DogName "Barkley") (Address "Sesame Street")
+bigbird :: Person
+bigbird = Person (HumanName "Big Bird") (DogName "Barkley") (Address "Sesame Street")
 
 chris :: Person
 chris = Person (HumanName "Chris Allen") (DogName "Papu") (Address "Austin")
@@ -84,3 +91,27 @@ getDogR = Dog <$> dogName <*> address
 -- with Reader, alternate
 getDogR' :: Person -> Dog
 getDogR' = liftA2 Dog dogName address
+
+
+-- Exercise: Reading Comprehension
+myLiftA2 :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
+myLiftA2 f x y = f <$> x <*> y
+
+asks :: (r -> a) -> Reader r a
+asks f = Reader f
+
+instance Functor (Reader r) where
+  fmap :: (a -> b)
+       -> Reader r a
+       -> Reader r b
+  fmap f (Reader ra) = Reader $ (f . ra)
+
+instance Applicative (Reader r) where
+  pure :: a -> Reader r a
+  pure a = Reader $ (\_ -> a)
+
+  (<*>) :: Reader r (a -> b)
+        -> Reader r a
+        -> Reader r b
+  (Reader rab) <*> (Reader ra) =
+    Reader $ \r -> (rab r) (ra r)
