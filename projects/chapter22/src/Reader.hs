@@ -62,8 +62,8 @@ ask = Reader id
 -- Demonstrating the function Applicative
 
 newtype HumanName = HumanName String deriving (Eq, Show)
-newtype DogName = DogName String deriving (Eq, Show)
-newtype Address = Address String deriving (Eq, Show)
+newtype DogName = DogName String     deriving (Eq, Show)
+newtype Address = Address String     deriving (Eq, Show)
 
 data Person = Person {
   humanName :: HumanName
@@ -77,10 +77,14 @@ data Dog = Dog {
 } deriving (Eq, Show)
 
 bigbird :: Person
-bigbird = Person (HumanName "Big Bird") (DogName "Barkley") (Address "Sesame Street")
+bigbird = Person (HumanName "Big Bird")
+                 (DogName "Barkley")
+                 (Address "Sesame Street")
 
 chris :: Person
-chris = Person (HumanName "Chris Allen") (DogName "Papu") (Address "Austin")
+chris = Person (HumanName "Chris Allen")
+               (DogName "Papu")
+               (Address "Austin")
 
 -- without Reader
 getDog :: Person -> Dog
@@ -93,7 +97,7 @@ getDogR' :: Person -> Dog
 getDogR' = liftA2 Dog dogName address
 
 
--- Exercise: Reading Comprehension
+-- 22.6 Exercise: Reading Comprehension
 myLiftA2 :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
 myLiftA2 f x y = f <$> x <*> y
 
@@ -115,3 +119,14 @@ instance Applicative (Reader r) where
         -> Reader r b
   (Reader rab) <*> (Reader ra) =
     Reader $ \r -> (rab r) (ra r)
+
+
+-- 22.7 Exercise: Reader Monad
+
+instance Monad (Reader r) where
+  return = pure
+  (>>=) :: Reader r a
+        -> (a -> Reader r b)
+        -> Reader r b
+  (Reader ra) >>= aRb =
+    Reader $ \r -> runReader (aRb (ra r)) r
