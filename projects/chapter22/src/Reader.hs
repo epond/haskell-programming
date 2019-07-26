@@ -95,7 +95,18 @@ getDogR = Dog <$> dogName <*> address
 -- with Reader, alternate
 getDogR' :: Person -> Dog
 getDogR' = liftA2 Dog dogName address
-
+-- with Reader Monad
+getDogRM :: Person -> Dog
+getDogRM = do
+  name <- dogName
+  addy <- address
+  return $ Dog name addy
+-- with the Monad of the Reader type defined in this file
+getDogRM' :: Person -> Dog
+getDogRM' = runReader (do
+  name <- Reader dogName
+  addy <- Reader address
+  return $ Dog name addy)
 
 -- 22.6 Exercise: Reading Comprehension
 myLiftA2 :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
